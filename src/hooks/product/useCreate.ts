@@ -20,17 +20,26 @@ export function useCreateProduct() {
       stock: Number(stock),
     }
 
-    await createProduct({
+    createProduct({
       variables: { data },
     })
+      .then(async () => {
+        await router.push('/products')
 
-    await router.push('/products')
-
-    toast({
-      status: 'success',
-      title: 'Produto criado com sucesso',
-      position: 'top-right',
-    })
+        toast({
+          status: 'success',
+          title: 'Produto criado com sucesso',
+          position: 'top-right',
+        })
+      })
+      .catch(() => {
+        toast({
+          status: 'error',
+          title: 'Não foi possível criar o produto',
+          description: 'tente novamente em alguns minutos.',
+          position: 'top-right',
+        })
+      })
   }
 
   return { create }
