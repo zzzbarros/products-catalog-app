@@ -35,6 +35,7 @@ export default () => {
             bg: 'blackAlpha.800',
             boxShadow: 'xl',
           }}
+          title='adicionar novo produtos'
           onClick={pushToCreate}
         />
       </Flex>

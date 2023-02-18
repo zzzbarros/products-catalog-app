@@ -28,17 +28,23 @@ export default () => {
             <Text fontSize={26}>Novo produto</Text>
             {fields.map(({ field, label, type }) => {
               return (
-                <Flex w='100%' gap={8}>
-                  <Text w={150}>{label}</Text>
+                <Flex
+                  flexDir={{
+                    base: 'column',
+                    md: 'row',
+                  }}
+                  gap={8}
+                >
+                  <Text w={{ base: '100%', md: '30%' }}>{label}</Text>
                   {type === 'textarea' ? (
                     <Textarea
-                      w={300}
+                      w={{ base: '100%', md: 350 }}
                       {...register(field, { required: 'Campo obrigatório' })}
                       error={errors[field]?.message}
                     />
                   ) : (
                     <Input
-                      w={300}
+                      w={{ base: '100%', md: 350 }}
                       {...register(field, { required: 'Campo obrigatório' })}
                       error={errors[field]?.message}
                       type={type}
@@ -49,7 +55,7 @@ export default () => {
             })}
           </Flex>
         </form>
-        <Button form='form-id' type='submit'>
+        <Button alignSelf='center' w={{ base: '100%', md: 200 }} form='form-id' type='submit'>
           Adicionar
         </Button>
       </Flex>

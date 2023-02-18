@@ -5,7 +5,7 @@ import type { ProductProps } from '@/types'
 export interface Props extends TableProps {
   titles: string[]
   render: () => ReactNode[][]
-  onRowClick?(item: any): void
+  onRowClick?(item: ProductProps): void
   data: ProductProps[]
   loading: boolean
 }

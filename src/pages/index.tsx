@@ -15,13 +15,13 @@ export default function Home() {
       </Head>
       <PageWrapper hideGoBack align='center' justify='space-between'>
         <Flex
+          height='100%'
+          width='100%'
           flexDir='column'
-          h='100%'
-          borderBottom='2px solid'
-          borderColor='gray.200'
           align='center'
           justify='center'
-          w='100%'
+          borderBottom='2px solid'
+          borderColor='gray.200'
         >
           <Text fontSize={32}>Olá, seja bem-vindo!</Text>
           <Text fontSize={26} color='gray.600'>
