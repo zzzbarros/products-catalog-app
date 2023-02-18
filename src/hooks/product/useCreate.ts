@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { useMutation } from '@apollo/client'
 import { useToast } from '@chakra-ui/react'
-import { POST_PRODUCTS, GET_PRODUCTS } from './constants'
+import { POST_PRODUCTS, GET_PRODUCTS } from '@/constants'
 import type { CreateProductInput } from '@/types'
 
 export function useCreateProduct() {

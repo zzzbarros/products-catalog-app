@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { GET_PRODUCTS } from './constants'
+import { GET_PRODUCTS } from '@/constants'
 import type { ProductProps } from '@/types'
 
 export function useProducts() {
