@@ -1,11 +1,21 @@
 export interface ProductProps {
-  id: number
   name: string
   description: string
   price: number
   stock: number
 }
 
-export type ProductPageProps = {
-  List: { products: ProductProps[] }
+export interface CreateProductInput {
+  name: string
+  price: number
+  stock: number
+  description: string
 }
+
+interface FieldProps {
+  field: keyof ProductProps
+  label: string
+  type: 'text' | 'textarea' | 'number'
+}
+
+export type RenderFieldsProps = FieldProps[]

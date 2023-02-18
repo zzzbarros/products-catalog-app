@@ -1,41 +1,52 @@
 import { Button, Flex, Text } from '@chakra-ui/react'
-import { PageWrapper, Input, Textarea } from '@/components'
 import { useForm } from 'react-hook-form'
-import type { ProductProps } from '@/types'
+import { PageWrapper, Input, Textarea } from '@/components'
+import { useCreateProduct } from '@/hooks'
+import type { ProductProps, RenderFieldsProps } from '@/types'
+
+const fields: RenderFieldsProps = [
+  { field: 'name', label: 'Nome do produto', type: 'text' },
+  { field: 'description', label: 'Descrição', type: 'textarea' },
+  { field: 'price', label: 'Preço', type: 'number' },
+  { field: 'stock', label: 'Estoque', type: 'number' },
+]
 
 export default () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ProductProps>()
+  } = useForm<ProductProps>({})
 
-  function submit(data: any) {
-    console.log(data, errors)
-  }
+  const { create } = useCreateProduct()
 
   return (
-    <PageWrapper flexDir='column' w='max-content' p={12} gap={8}>
+    <PageWrapper>
       <Flex flexDir='column' justify='space-between' gap={8} height='100%'>
-        <form id='form-id' onSubmit={handleSubmit(submit)}>
+        <form id='form-id' onSubmit={handleSubmit(create)}>
           <Flex flexDir='column' gap={8}>
             <Text fontSize={26}>Novo produto</Text>
-            <Flex w='100%' gap={8}>
-              <Text w={150}>Nome do produto</Text>
-              <Input w={300} {...register('name', { required: 'Campo obrigatório' })} error={errors.name?.message} />
-            </Flex>
-            <Flex w='100%' gap={8}>
-              <Text w={150}>Descrição</Text>
-              <Textarea w={300} {...register('description')} />
-            </Flex>
-            <Flex w='100%' gap={8} align='center'>
-              <Text w={150}>Preço</Text>
-              <Input w={300} {...register('price')} type='number' />
-            </Flex>
-            <Flex w='100%' gap={8} align='center'>
-              <Text w={150}>Estoque</Text>
-              <Input w={300} {...register('stock')} />
-            </Flex>
+            {fields.map(({ field, label, type }) => {
+              return (
+                <Flex w='100%' gap={8}>
+                  <Text w={150}>{label}</Text>
+                  {type === 'textarea' ? (
+                    <Textarea
+                      w={300}
+                      {...register(field, { required: 'Campo obrigatório' })}
+                      error={errors[field]?.message}
+                    />
+                  ) : (
+                    <Input
+                      w={300}
+                      {...register(field, { required: 'Campo obrigatório' })}
+                      error={errors[field]?.message}
+                      type={type}
+                    />
+                  )}
+                </Flex>
+              )
+            })}
           </Flex>
         </form>
         <Button form='form-id' type='submit'>
