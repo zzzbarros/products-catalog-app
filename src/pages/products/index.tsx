@@ -1,73 +1,30 @@
-import { PageWrapper, Table } from '@/components'
-import { Flex, Text, Button } from '@chakra-ui/react'
-import type { ProductPageProps } from '@/types'
 import { useRouter } from 'next/router'
+import { Flex, Text, Button } from '@chakra-ui/react'
+import { PageWrapper, Table } from '@/components'
+import { useProducts } from '@/hooks'
 
-// TODO: remover mock
-const MOCK = [
-  {
-    id: 1,
-    name: 'Produto A',
-    price: 200,
-    stock: 10,
-    description: 'teste',
-  },
-  {
-    id: 2,
-    name: 'Produto B',
-    price: 300,
-    stock: 10,
-    description: 'teste',
-  },
-  {
-    id: 4,
-    name: 'Produto C',
-    price: 400,
-    stock: 10,
-    description: 'teste',
-  },
-  {
-    id: 5,
-    name: 'Produto C',
-    price: 400,
-    stock: 10,
-    description: 'teste',
-  },
-  {
-    id: 6,
-    name: 'Produto C',
-    price: 400,
-    stock: 10,
-    description: 'teste',
-  },
-  {
-    id: 7,
-    name: 'Produto C',
-    price: 400,
-    stock: 10,
-    description: 'teste',
-  },
-  {
-    id: 8,
-    name: 'Produto C',
-    price: 400,
-    stock: 10,
-    description: 'teste',
-  },
-]
+const titles = ['Título', 'Valor', 'Estoque']
 
-// TODO: remover mock
-export default ({ products = MOCK }: ProductPageProps['List']) => {
+export default () => {
   const router = useRouter()
+  const { products, loading } = useProducts()
+
+  const tableProps = { titles, loading, data: products, render }
 
   function render() {
+    if (!products.length) return []
+
     return products.map((item) => {
       return [<Text>{item.name}</Text>, <Text>{item.price}</Text>, <Text>{item.stock}</Text>]
     })
   }
 
+  function pushToCreate() {
+    router.push('products/new')
+  }
+
   return (
-    <PageWrapper gap={8} flexDir='column' width='60%' p={8}>
+    <PageWrapper>
       <Flex justify='space-between'>
         <Text fontSize={26}>Lista de Produtos</Text>
         <Button
@@ -78,11 +35,10 @@ export default ({ products = MOCK }: ProductPageProps['List']) => {
             bg: 'blackAlpha.800',
             boxShadow: 'xl',
           }}
-          onClick={() => router.push('products/new')}
+          onClick={pushToCreate}
         />
       </Flex>
-
-      <Table render={render()} data={products} titles={['Titulo', 'Valor', 'Estoque']} />
+      <Table {...tableProps} />
     </PageWrapper>
   )
 }
