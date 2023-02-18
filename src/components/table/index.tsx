@@ -1,19 +1,21 @@
 import { memo } from 'react'
-import type { ReactNode } from 'react'
-import { Box, Flex, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react'
-import type { TableProps } from '@chakra-ui/react'
+import { Flex, Skeleton, Table, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react'
 import { Scrollbar } from '@/styles/theme'
+import type { Props, ReactNode } from './types'
 
-interface Props extends TableProps {
-  titles: string[]
-  render: ReactNode[][]
-  onRowClick?(item: any): void
-  data: any
-}
+export default memo(({ titles, render, data, onRowClick, loading, ...rest }: Props) => {
+  const content = render()
+  const isEmpty = !content.length && !loading
 
-export default memo(({ titles, render, data, onRowClick, ...rest }: Props) => {
+  if (isEmpty)
+    return (
+      <Text fontSize={26} textAlign='center' padding={8}>
+        Nenhum item encontrado
+      </Text>
+    )
+
   return (
-    <Box overflowX='auto' css={Scrollbar}>
+    <Skeleton isLoaded={!loading} h='100%' overflowX='auto' css={Scrollbar} borderRadius={8}>
       <Table size='lg' {...rest}>
         <Thead>
           <Tr>
@@ -21,15 +23,15 @@ export default memo(({ titles, render, data, onRowClick, ...rest }: Props) => {
               return (
                 <Th
                   key={title}
-                  color='white'
                   fontSize={14}
-                  fontFamily='Roboto'
-                  lineHeight='16px'
+                  lineHeight={4}
+                  color='white'
                   width='auto'
+                  fontFamily='Roboto'
                   bg='blackAlpha.800'
                 >
                   <Flex alignItems='center' justifyContent='space-between'>
-                    <Text fontSize={14} lineHeight='16px'>
+                    <Text fontSize={14} lineHeight={4}>
                       {title}
                     </Text>
                   </Flex>
@@ -39,15 +41,17 @@ export default memo(({ titles, render, data, onRowClick, ...rest }: Props) => {
           </Tr>
         </Thead>
         <Tbody>
-          {render.map((row, i) => (
-            <Tr key={i} fontSize='14px' cursor={onRowClick && 'pointer'} onClick={() => onRowClick?.(data[i])}>
+          {content.map((row, i) => (
+            <Tr key={i} fontSize={14} cursor={onRowClick && 'pointer'} onClick={() => onRowClick?.(data[i])}>
               {row.map((val: ReactNode, index: number) => (
-                <Td key={index}>{val}</Td>
+                <Td key={index} px={12}>
+                  {val}
+                </Td>
               ))}
             </Tr>
           ))}
         </Tbody>
       </Table>
-    </Box>
+    </Skeleton>
   )
 })

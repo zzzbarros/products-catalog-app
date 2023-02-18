@@ -2,10 +2,9 @@ import { forwardRef } from 'react'
 import { Textarea } from '@chakra-ui/react'
 import { ErrorWrapper } from '../error'
 import type { TextareaProps } from '@chakra-ui/react'
+import type { ErrorProps } from '../error'
 
-interface Props extends TextareaProps {
-  error?: string
-}
+type Props = TextareaProps & ErrorProps
 
 export default forwardRef<HTMLTextAreaElement, Props>(({ error, ...rest }, ref) => {
   return (

@@ -13,11 +13,11 @@ export default function Home() {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <PageWrapper hideGoBack align='center' justify='space-between' width='60%'>
+      <PageWrapper hideGoBack align='center' justify='space-between'>
         <Flex
           flexDir='column'
           h='100%'
-          borderRight='2px solid'
+          borderBottom='2px solid'
           borderColor='gray.200'
           align='center'
           justify='center'

@@ -2,10 +2,9 @@ import { forwardRef } from 'react'
 import { Input } from '@chakra-ui/react'
 import { ErrorWrapper } from '../error'
 import type { InputProps } from '@chakra-ui/react'
+import type { ErrorProps } from '../error'
 
-interface Props extends InputProps {
-  error?: string
-}
+type Props = InputProps & ErrorProps
 
 export default forwardRef<HTMLInputElement, Props>(({ error, ...rest }, ref) => {
   return (
